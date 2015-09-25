@@ -1,5 +1,7 @@
 
-var CAPTURE_DELAY = 150;
+// screenshot every 1s
+var CAPTURE_DELAY = 1000,
+    CAPTURE_SHOTS = 5;
 
 function onMessage(request, sender, callback) {
     if (request.msg === 'scrollPage') {
@@ -61,15 +63,21 @@ function getPositions(callback) {
     // Disable all scrollbars. We'll restore the scrollbar state when we're done
     // taking the screenshots.
     document.documentElement.style.overflow = 'hidden';
+    for ( var i=0 ; i< CAPTURE_SHOTS ; i++ ) {
+        arrangements.push( [ originalX, originalY ] );
+    }
 
+    // just do one screenshot of visible window
+    /*
     while (yPos > -yDelta) {
         xPos = 0;
-        while (xPos < fullWidth) {
+        while (xPos < fullWidth ) {
             arrangements.push([xPos, yPos]);
             xPos += xDelta;
         }
         yPos -= yDelta;
-    }
+    }/*
+
 
     /** * /
     console.log('fullHeight', fullHeight, 'fullWidth', fullWidth);

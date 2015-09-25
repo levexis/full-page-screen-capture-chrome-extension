@@ -109,6 +109,7 @@ function capturePage(data, sender, callback) {
 
 
     if (!screenshot.canvas) {
+        // is this the output canvas
         canvas = document.createElement('canvas');
         canvas.width = data.totalWidth;
         canvas.height = data.totalHeight;
@@ -134,7 +135,7 @@ function capturePage(data, sender, callback) {
             if (dataURI) {
                 var image = new Image();
                 image.onload = function() {
-                    // sendLogMessage('img dims: ' + image.width + ', ' + image.height);
+                    sendLogMessage('img dims: ' + image.width + ', ' + image.height,dataURI);
                     screenshot.ctx.drawImage(image, data.x, data.y);
                     callback(true);
                 };
@@ -216,6 +217,7 @@ chrome.tabs.getSelected(null, function(tab) {
         chrome.tabs.executeScript(tab.id, {file: 'page.js'}, function() {
             loaded = true;
             show('loading');
+
             sendScrollMessage(tab);
         });
 
